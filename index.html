@@ -699,20 +699,23 @@ footer {
       <p class="modal-sub">Interested in my work or looking to connect? Fill in below and I'll respond promptly.</p>
 
       <form id="contact-form" name="portfolio-contact" method="POST" data-netlify="true">
-      <div class="form-row">
+      <!-- 1. The Name Input (Add name="name" and required) -->
+        <div class="form-row">
         <label for="f-name">Your name</label>
         <input type="text" id="f-name" placeholder="Dr. Doofenshmirtz " autocomplete="name">
       </div>
+      <!-- 2. The Email Input (Add name="email" and required) -->
       <div class="form-row">
         <label for="f-email">Your email</label>
         <input type="email" id="f-email" placeholder="abd@gmail.com" autocomplete="email">
       </div>
+      <!-- 3. The Message Textarea (Add name="message" and required) -->
       <div class="form-row">
         <label for="f-msg">Message</label>
         <textarea id="f-msg" placeholder="Hey! its me... "></textarea>
       </div>
       <div class="form-actions">
-        <button class="btn-primary" onclick="submitForm()">Send message</button>
+        <button type="button" class="btn-primary" onclick="submitForm(event)">Send message</button>
         <button class="btn-outline" onclick="closeModal()">Cancel</button>
       </div>
       <p class="form-note">
@@ -751,24 +754,49 @@ function handleOverlayClick(e) {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-function submitForm() {
-  const name    = document.getElementById('f-name').value.trim();
-  const email   = document.getElementById('f-email').value.trim();
-  const message = document.getElementById('f-msg').value.trim();
-  if (!name || !email || !message) {
-    const first = !name ? 'f-name' : !email ? 'f-email' : 'f-msg';
-    document.getElementById(first).focus();
-    document.getElementById(first).style.borderColor = 'var(--terracotta)';
-    setTimeout(() => document.getElementById(first).style.borderColor = '', 1800);
+function submitForm(event) {
+  // 1. Prevent the browser from jumping away or opening a yellow page
+  if (event) event.preventDefault();
+  
+  const form = document.getElementById('contact-form');
+  
+  // 2. Make sure the user didn't leave fields blank
+  if (!form.checkValidity()) {
+    form.reportValidity();
     return;
   }
-  const subject = encodeURIComponent('Research inquiry from ' + name);
-  const body    = encodeURIComponent(
-    message + '\n\n— ' + name + '\n' + email
-  );
-  window.location.href = `mailto:talatilyass07@gmail.com?subject=${subject}&body=${body}`;
-  document.getElementById('form-content').style.display = 'none';
-  document.getElementById('form-success').style.display = 'block';
+
+  // 3. Package the inputs cleanly for Netlify
+  const formData = new FormData(form);
+
+  // 4. Send the message silently in the background
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(formData).toString(),
+  })
+  .then(() => {
+    // 5. Clean up the clumsy text inside your existing visual success box
+    const formSuccessBox = document.getElementById('form-success');
+    if (formSuccessBox) {
+      formSuccessBox.innerHTML = `
+        <svg viewBox="0 0 24 24" style="width:48px; height:48px; stroke:#116b4f; fill:none; stroke-width:2; margin-bottom:12px;"><circle cx="12" cy="12" r="10"/><polyline points="8,12 11,15 16,9"/></svg>
+        <strong style="display:block; font-size:20px; font-family:'Fraunces',serif; margin-bottom:8px;">Thank You!</strong>
+        <p style="margin:0; font-size:14px; color:var(--ink-soft);">Your message has been sent successfully. I will get back to you shortly.</p>
+      `;
+    }
+
+    // 6. Toggle the visual panels seamlessly
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('form-success').style.display = 'flex';
+    
+    // 7. Reset the fields to blank
+    form.reset();
+  })
+  .catch((error) => {
+    alert("Something went wrong. Please try again.");
+    console.error(error);
+  });
 }
 
 /* ── Active nav ── */
