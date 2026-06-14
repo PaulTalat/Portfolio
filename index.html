@@ -49,7 +49,7 @@ body {
   -webkit-font-smoothing:antialiased;
 }
 
-/* ── REVOLUTIONARY SPLIT-SCREEN LAYOUT ARCHITECTURE ── */
+/* ── SPLIT-SCREEN LAYOUT ARCHITECTURE ── */
 .split-container {
   display: grid;
   grid-template-columns: 42% 58%;
@@ -58,9 +58,13 @@ body {
   position: relative;
 }
 
-/* ⏹️ FIXED LEFT PANEL (PREMIUM REVOLUTIONARY EDITORIAL) */
+/* ⏹️ FIXED LEFT PANEL */
 .left-panel {
-  background: var(--dark-bg);
+  /* 1. Cinematic Film Grain Added Here */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  background-color: var(--dark-bg);
+  background-blend-mode: overlay;
+  
   color: var(--dark-ink);
   position: sticky;
   top: 0;
@@ -88,8 +92,8 @@ body {
 }
 .left-hero h1.name {
   font-family:'Fraunces',serif; font-weight:600;
-  font-size: clamp(40px, 4.5vw, 68px);
-  line-height:1.05; letter-spacing:-0.02em;
+  font-size: clamp(48px, 6.5vw, 88px); 
+  line-height:1.05; letter-spacing:-0.03em;
   color: var(--dark-ink); margin-bottom: 24px;
 }
 .left-hero .eyebrow {
@@ -101,8 +105,9 @@ body {
 .left-hero .eyebrow::before { content:''; width:24px; height:1px; background:var(--neon-accent); flex-shrink:0; }
 
 .left-hero .hero-tagline {
-  font-size:16px; color: var(--dark-ink-soft);
-  font-weight:400; line-height:1.7; max-width: 90%;
+  font-size:18px;
+  color: var(--dark-ink-soft);
+  font-weight:400; line-height:1.65; max-width: 95%;
 }
 
 /* Left Interactive Menu Link Coordinates */
