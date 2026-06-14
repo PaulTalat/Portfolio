@@ -702,17 +702,17 @@ footer {
       <!-- 1. The Name Input (Add name="name" and required) -->
         <div class="form-row">
         <label for="f-name">Your name</label>
-        <input type="text" id="f-name" placeholder="Dr. Doofenshmirtz " autocomplete="name">
+        <input type="text" id="f-name" name="name" placeholder="Dr. Doofenshmirtz " autocomplete="name" required>
       </div>
       <!-- 2. The Email Input (Add name="email" and required) -->
       <div class="form-row">
         <label for="f-email">Your email</label>
-        <input type="email" id="f-email" placeholder="abd@gmail.com" autocomplete="email">
+        <input type="email" id="f-email" name="email" placeholder="abc@gmail.com" autocomplete="email" required>
       </div>
       <!-- 3. The Message Textarea (Add name="message" and required) -->
       <div class="form-row">
         <label for="f-msg">Message</label>
-        <textarea id="f-msg" placeholder="Hey! its me... "></textarea>
+        <textarea id="f-msg" name="message" placeholder="que pasa " required></textarea>
       </div>
       <div class="form-actions">
         <button type="button" class="btn-primary" onclick="submitForm(event)">Send message</button>
