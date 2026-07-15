@@ -729,8 +729,6 @@ function submitForm(e) {
   .catch(() => alert('Something went wrong. Please email me directly.'));
 }
 
-/* Nav active state — tracks scroll within right-canvas */
-/* helper: offset relative to the scroll container, not the document */
 function getOffsetTop(el, container) {
   return el.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop;
 }
@@ -738,7 +736,6 @@ const rightCanvas = document.querySelector('.right-canvas');
 const navLinks = document.querySelectorAll('.top-nav a');
 const sections = document.querySelectorAll('main section[id]');
 
-/* sections that don't have their own nav link map to a stand-in id */
 const navIdOverride = { interests: 'skills' };
 
 const navObserver = new IntersectionObserver((entries) => {
